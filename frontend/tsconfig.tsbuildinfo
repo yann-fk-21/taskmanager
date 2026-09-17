@@ -1,0 +1,1 @@
+{"root":["./react-router.config.ts","./vite.config.ts","./src/app.tsx","./src/main.tsx","./src/components/hero.tsx","./src/components/navbar.tsx","./src/pages/mytasks.tsx","./src/pages/signinpage.tsx","./src/pages/signuppage.tsx"],"version":"5.9.3"}
