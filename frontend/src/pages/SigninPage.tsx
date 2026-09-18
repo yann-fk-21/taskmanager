@@ -64,8 +64,8 @@ const SigninPage = () => {
       saveTokenInLocalStorage(data.token);
       // console.log('Login response data:', data);
       navigate('/my-tasks');
-      setIsSubmitting(false);
     }
+    setIsSubmitting(false);
   };
 
   const togglePasswordVisibility = () => {
