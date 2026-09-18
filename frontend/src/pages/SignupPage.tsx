@@ -1,7 +1,106 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { toast } from '../../app/components/ui/toast';
+import type { User } from '../types/types';
+import type { ErrorForm } from '../types/types-ui';
+
 import logo from '../assets/logo.png';
+import { Button } from '../../app/components/ui/button';
+import { PiEyeSlashThin } from 'react-icons/pi';
+import { LiaEyeSolid } from 'react-icons/lia';
+import { registerUser } from '../services/auth';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const SignupPage = () => {
+  const [username, setUsername] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [isUsernameValid, setIsUsernameValid] = useState<boolean>(true);
+  const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
+  const [isPasswordValid, setIsPasswordValid] = useState<boolean>(true);
+  const navigate = useNavigate();
+
+  const registerHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const inputValidity: ErrorForm = checkInputValidity();
+
+    if (inputValidity.status === false) {
+      inputValidity.message.usernameMessage &&
+        toast.add({
+          title: inputValidity.message.usernameMessage,
+          type: 'error',
+        });
+      inputValidity.message.emailMessage &&
+        toast.add({ title: inputValidity.message.emailMessage, type: 'error' });
+      inputValidity.message.passwordMessage &&
+        toast.add({
+          title: inputValidity.message.passwordMessage,
+          type: 'error',
+        });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    const user: User = {
+      username,
+      email,
+      password,
+    };
+
+    const response = await registerUser(user);
+    if (!response.ok) {
+      toast.add({
+        title: 'Registration failed. Please try again.',
+        type: 'error',
+      });
+    } else {
+      toast.add({
+        title: 'Registration successful! Please log in.',
+        type: 'success',
+      });
+    }
+    setIsSubmitting(false);
+    navigate('/signin');
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState);
+  };
+
+  const checkInputValidity = (): ErrorForm => {
+    const usernameOk = username.trim().length >= 3;
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const passwordOk = password.length >= 6;
+
+    setIsUsernameValid(usernameOk);
+    setIsEmailValid(emailOk);
+    setIsPasswordValid(passwordOk);
+
+    const errorForm: ErrorForm = {
+      status: true,
+      message: {},
+    };
+
+    if (!usernameOk || !emailOk || !passwordOk) {
+      errorForm.status = false;
+      errorForm.message.usernameMessage = usernameOk
+        ? ''
+        : 'Username must be at least 3 characters long.';
+      errorForm.message.emailMessage = emailOk
+        ? ''
+        : 'Please enter a valid email address.';
+      errorForm.message.passwordMessage = passwordOk
+        ? ''
+        : 'Password must be at least 6 characters long.';
+      return errorForm;
+    }
+
+    return errorForm;
+  };
+
   return (
     <React.Fragment>
       <div className="absolute -left-0 top-16 h-72 w-72 rounded-full bg-[radial-gradient(circle,_rgba(74,222,128,0.55),_rgba(34,197,94,0.24),_transparent_72%)] blur-3xl" />
@@ -17,34 +116,76 @@ const SignupPage = () => {
           <h2 className="text-4xl font-bold text-center">Come and join us!</h2>
           <p className="text-center text-lg">
             Do you have an account?{' '}
-            <a href="/signin" className="underline font-bold">
+            <Link to="/signin" className="underline font-bold">
               Sign in
-            </a>
+            </Link>
           </p>
         </div>
 
-        <form className="flex flex-col gap-4 mt-6 w-2/5">
-          <input
-            type="text"
-            placeholder="Username"
-            className="w-full px-6 py-2 rounded-xl bg-gray-100 border-2 border-gray-300 focus:outline-none focus:border-gray-600"
-          />
+        <form
+          onSubmit={registerHandler}
+          className="flex flex-col gap-4 mt-4 w-2/5"
+        >
+          <div>
+            <label htmlFor="username" className="text-sm font-semibold">
+              Username
+            </label>
+            <input
+              type="text"
+              placeholder="John Doe"
+              className="w-full px-4 py-2 text-sm text-semibold rounded-xl bg-gray-100 border-2 border-gray-300 focus:outline-none focus:border-gray-600"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
 
-          <input
-            type="email"
-            placeholder="Email"
-            className="w-full px-6 py-2 rounded-xl bg-gray-100 border-2 border-gray-300 focus:outline-none focus:border-gray-600"
-          />
+          <div>
+            <label htmlFor="email" className="text-sm font-semibold">
+              Email
+            </label>
+            <input
+              type="email"
+              placeholder="john.doe@example.com"
+              className="w-full px-6 py-2 text-sm text-semibold rounded-xl bg-gray-100 border-2 border-gray-300 focus:outline-none focus:border-gray-600"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
 
-          <input
-            type="password"
-            placeholder="Password"
-            className="w-full px-6 py-2 rounded-xl bg-gray-100 border-2 border-gray-300 focus:outline-none focus:border-gray-600"
-          />
+          <div>
+            <label htmlFor="password" className="text-sm font-semibold">
+              Password
+            </label>
+            <div className="relative">
+              <button
+                type="button"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                onClick={togglePasswordVisibility}
+                className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer text-xl text-gray-500 focus:outline-none"
+              >
+                {showPassword ? (
+                  <LiaEyeSolid className="pointer-events-none" />
+                ) : (
+                  <PiEyeSlashThin className="pointer-events-none" />
+                )}
+              </button>
+              <input
+                type={showPassword ? 'text' : 'password'}
+                placeholder="Enter strong password"
+                className="w-full px-6 pr-12 py-2 text-sm text-semibold rounded-xl bg-gray-100 border-2 border-gray-300 focus:outline-none focus:border-gray-600"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+          </div>
 
-          <button className="w-full py-2 px-6 bg-black text-white rounded-xl">
-            Sign Up
-          </button>
+          <Button
+            type="submit"
+            className={`w-full py-5 px-6 cursor-pointer ${isSubmitting ? 'bg-black/50' : 'bg-black'} font-bold text-white rounded-xl`}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? 'Signing Up...' : 'Sign Up'}
+          </Button>
         </form>
       </div>
     </React.Fragment>

@@ -6,6 +6,9 @@ import App from './App';
 import SigninPage from './pages/SigninPage';
 import SignupPage from './pages/SignupPage';
 import MyTasks from './pages/MyTasks';
+import NotFoundPage from './pages/NotFoundPage';
+import { Toaster } from '../app/components/ui/toast';
+import ProtectedRoute from './components/ProtectedRoute';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -14,8 +17,17 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/" element={<App />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/signin" element={<SigninPage />} />
-        <Route path="/my-tasks" element={<MyTasks />} />
+        <Route
+          path="/my-tasks"
+          element={
+            <ProtectedRoute>
+              <MyTasks />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
+    <Toaster />
   </StrictMode>,
 );

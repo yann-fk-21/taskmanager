@@ -1,5 +1,8 @@
 import React from 'react';
 import { MdOutlineArrowOutward } from 'react-icons/md';
+import { Button } from '../../app/components/ui/button';
+import { Link } from 'react-router-dom';
+import { isTokenValid } from '../utils/utils';
 
 import heroImageOne from '../assets/hero-1.png';
 import heroImageTwo from '../assets/hero-2.png';
@@ -21,12 +24,12 @@ const Hero = () => {
         </div>
 
         <div className="relative z-10 flex flex-row gap-4 items-center justify-center my-8">
-          <a href="/signup">
-            <button className="flex flex-row gap-2 font-bold items-center px-4 py-2 bg-black text-white text-md rounded-lg cursor-pointer">
+          <Link to={isTokenValid() ? '/my-tasks' : '/signin'}>
+            <Button className="flex flex-row gap-2 font-bold items-center px-4 py-5 bg-black text-white text-md rounded-xl cursor-pointer">
               <span>Get Started</span>
               <MdOutlineArrowOutward />
-            </button>
-          </a>
+            </Button>
+          </Link>
         </div>
 
         <div className="relative z-10 mx-auto mt-16 flex w-full max-w-3xl items-center justify-center">

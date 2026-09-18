@@ -1,28 +1,33 @@
 import React from 'react';
 import logo from '../assets/logo.png';
+import { Button } from '../../app/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   return (
     <React.Fragment>
       <nav className="flex justify-between items-center p-12 py-6">
         <div>
-          <a href="/">
+          <Link to="/">
             <img src={logo} alt="Logo" className="h-8" />
-          </a>
+          </Link>
         </div>
 
         <div className="flex flex-row gap-4 items-center">
-          <a href="/signup">
-            <button className="text-sm font-bold cursor-pointer">
+          <Link to="/signup">
+            <Button
+              variant="outline"
+              className="text-sm font-bold cursor-pointer"
+            >
               Sign Up
-            </button>
-          </a>
+            </Button>
+          </Link>
 
-          <a href="/signin">
-            <button className="text-sm font-bold px-4 py-2 bg-black text-white rounded-lg cursor-pointer">
+          <Link to="/signin">
+            <Button className="text-sm font-bold px-4 py-2 bg-black text-white rounded-lg cursor-pointer">
               Sign In
-            </button>
-          </a>
+            </Button>
+          </Link>
         </div>
       </nav>
     </React.Fragment>
