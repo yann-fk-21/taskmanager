@@ -2,7 +2,7 @@ import type { User, UserCredentials } from '../types/types';
 
 const BACKEND_URL =
   import.meta.env.VITE_BACKEND_URL ||
-  'taskmanager-production-4adf.up.railway.app';
+  'https://taskmanager-production-4adf.up.railway.app';
 
 export const registerUser = async (user: User): Promise<Response> => {
   try {

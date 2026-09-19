@@ -3,7 +3,7 @@ import { getTokenFromLocalStorage } from '../utils/utils';
 
 const BACKEND_URL =
   import.meta.env.VITE_BACKEND_URL ||
-  'taskmanager-production-4adf.up.railway.app';
+  'https://taskmanager-production-4adf.up.railway.app';
 
 const getAuthHeaders = (): HeadersInit => {
   const token = getTokenFromLocalStorage();
