@@ -117,7 +117,7 @@ const CreateTaskForm = ({ onTaskCreated }: { onTaskCreated?: () => void }) => {
                     id="description"
                     className="bg-gray-100"
                     placeholder="Describe your task here."
-                    maxLength={60}
+                    maxLength={100}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                   />
