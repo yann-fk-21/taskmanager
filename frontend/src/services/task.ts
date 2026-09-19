@@ -1,21 +1,9 @@
 import type { CardTask, CreatedTask } from '../types/types';
 import { getTokenFromLocalStorage } from '../utils/utils';
 
-const resolveBackendUrl = (): string => {
-  if (import.meta.env.VITE_BACKEND_URL) {
-    return import.meta.env.VITE_BACKEND_URL;
-  }
-
-  if (import.meta.env.DEV) {
-    return 'http://localhost:8080';
-  }
-
-  throw new Error(
-    'Missing VITE_BACKEND_URL. Set the public Railway backend URL in the frontend environment variables.',
-  );
-};
-
-const BACKEND_URL = resolveBackendUrl();
+const BACKEND_URL =
+  import.meta.env.VITE_BACKEND_URL ||
+  'taskmanager-production-4adf.up.railway.app';
 
 const getAuthHeaders = (): HeadersInit => {
   const token = getTokenFromLocalStorage();
