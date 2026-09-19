@@ -1,22 +1,35 @@
-FROM node:24-alpine AS development-dependencies-env
-COPY . /app
+FROM node:22-alpine AS build
 WORKDIR /app
+
+COPY package*.json ./
 RUN npm ci
 
-FROM node:24-alpine AS production-dependencies-env
-COPY ./package.json package-lock.json /app/
-WORKDIR /app
-RUN npm ci --omit=dev
-
-FROM node:24-alpine AS build-env
-COPY . /app/
-COPY --from=development-dependencies-env /app/node_modules /app/node_modules
-WORKDIR /app
+COPY . .
 RUN npm run build
 
-FROM node:24-alpine
-COPY ./package.json package-lock.json /app/
-COPY --from=production-dependencies-env /app/node_modules /app/node_modules
-COPY --from=build-env /app/build /app/build
-WORKDIR /app
-CMD ["npm", "run", "start"]
+FROM nginx:1.27-alpine AS production
+
+RUN rm -rf /usr/share/nginx/html/*
+COPY --from=build /app/dist /usr/share/nginx/html
+
+COPY <<'EOF' /etc/nginx/conf.d/default.conf
+server {
+    listen 80;
+    server_name localhost;
+
+    root /usr/share/nginx/html;
+    index index.html;
+
+    location / {
+        try_files $uri /index.html;
+    }
+
+    location /assets/ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+}
+EOF
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
