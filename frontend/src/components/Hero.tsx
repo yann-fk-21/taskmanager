@@ -10,7 +10,7 @@ import heroImageTwo from '../assets/hero-2.png';
 const Hero = () => {
   return (
     <React.Fragment>
-      <section className="relative overflow-hidden px-12 py-4">
+      <section className="relative overflow-hidden px-12 py-4 min-h-screen">
         <div className="absolute -left-20 top-16 h-72 w-72 rounded-full bg-[radial-gradient(circle,_rgba(74,222,128,0.55),_rgba(34,197,94,0.24),_transparent_72%)] blur-3xl" />
         <div className="absolute -right-20 top-16 h-72 w-72 rounded-full bg-[radial-gradient(circle,_rgba(74,222,128,0.55),_rgba(34,197,94,0.24),_transparent_72%)] blur-3xl" />
 

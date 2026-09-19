@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const Navbar = () => {
   return (
     <React.Fragment>
-      <nav className="flex justify-between items-center p-12 py-6">
+      <nav className="flex justify-between items-center px-4 md:p-12 py-6">
         <div>
           <Link to="/">
             <img src={logo} alt="Logo" className="h-8" />

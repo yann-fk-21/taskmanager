@@ -55,6 +55,7 @@ const SigninPage = () => {
         title: 'Login failed. Please check your credentials and try again.',
         type: 'error',
       });
+      setIsSubmitting(false);
     } else {
       toast.add({
         title: 'Login successful!',
@@ -120,7 +121,7 @@ const SigninPage = () => {
 
         <form
           onSubmit={loginHandler}
-          className="flex flex-col gap-4 mt-4 w-2/5"
+          className="flex flex-col gap-4 mt-4 md:w-2/5"
         >
           <div>
             <label htmlFor="username" className="text-sm font-semibold">

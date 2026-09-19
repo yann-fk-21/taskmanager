@@ -38,52 +38,61 @@ const MyTasks = () => {
 
   return (
     <React.Fragment>
-      <div className="min-h-screen bg-gray-100 pb-12 flex flex-col items-center w-full">
-        <div className="w-full flex justify-between items-center p-12 py-6">
-          <Link to="/">
-            <img src={logo} alt="Logo" className="h-8" />
-          </Link>
+      <div className="min-h-screen w-full bg-gray-100 pb-8 sm:pb-12">
+        <header className="w-full px-4 sm:px-6 lg:px-12 py-4 sm:py-6">
+          <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
+            <Link to="/" className="flex-shrink-0">
+              <img src={logo} alt="Logo" className="h-7 sm:h-8" />
+            </Link>
 
-          <Button
-            onClick={logoutHandler}
-            className="cursor-pointer px-3 py-2 font-bold"
-            variant="destructive"
-          >
-            Logout
-          </Button>
-        </div>
+            <Button
+              onClick={logoutHandler}
+              className="cursor-pointer px-3 py-2 text-sm sm:text-base font-bold"
+              variant="destructive"
+            >
+              Logout
+            </Button>
+          </div>
+        </header>
 
-        <div className="w-11/12 max-w-7xl py-0">
-          <h1>
-            Welcome back,{' '}
-            <span className="text-green-500">
-              {username.charAt(0).toUpperCase() + username.slice(1)}
-            </span>
-          </h1>
-          <p className="text-xl font-semibold text-gray-500">
-            Let’s continue where you left off.
-          </p>
+        <main className="mx-auto w-[92%] max-w-7xl">
+          <section className="pt-2 sm:pt-4">
+            <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold tracking-tight text-gray-800">
+              Welcome back,{' '}
+              <span className="text-green-500">
+                {username.charAt(0).toUpperCase() + username.slice(1)}
+              </span>
+            </h1>
+            <p className="mt-2 text-sm sm:text-base lg:text-xl font-semibold text-gray-500">
+              Let’s continue where you left off.
+            </p>
+          </section>
 
-          <div className="w-full py-8 flex justify-between items-center">
-            <div className="relative">
+          <div className="mt-6 flex flex-col gap-4 sm:gap-5 lg:flex-row lg:items-center lg:justify-between">
+            <div className="relative w-full lg:max-w-xl">
               <CiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-xl text-gray-500" />
               <input
                 type="text"
                 placeholder="Find tasks"
                 value={searchTerm}
                 onChange={(event) => setSearchTerm(event.target.value)}
-                className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-300 bg-white focus:outline-none focus:border-green-500"
+                className="w-full rounded-xl border border-gray-300 bg-white py-3 pl-12 pr-4 text-sm sm:text-base text-gray-700 shadow-sm transition focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-200"
               />
             </div>
 
-            <CreateTaskForm onTaskCreated={refreshTasks} />
+            <div className="w-full lg:w-auto lg:flex lg:justify-end">
+              <CreateTaskForm onTaskCreated={refreshTasks} />
+            </div>
           </div>
-          <CardSection
-            refreshKey={tasksRefreshKey}
-            searchTerm={searchTerm}
-            onTaskChanged={refreshTasks}
-          />
-        </div>
+
+          <div className="mt-6">
+            <CardSection
+              refreshKey={tasksRefreshKey}
+              searchTerm={searchTerm}
+              onTaskChanged={refreshTasks}
+            />
+          </div>
+        </main>
       </div>
     </React.Fragment>
   );

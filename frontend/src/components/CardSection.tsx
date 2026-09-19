@@ -107,35 +107,35 @@ const CardSection = ({
 
   return (
     <React.Fragment>
-      <Tabs defaultValue="All">
-        <TabsList className="bg-gray-200">
+      <Tabs defaultValue="All" className="w-full">
+        <TabsList className="w-full overflow-x-auto bg-gray-200 p-1 sm:w-fit sm:overflow-visible">
           <TabsTrigger
             value="All"
-            className="px-3 py-2 flex items-center gap-1"
+            className="shrink-0 px-2 py-2 text-xs sm:px-3 sm:text-sm"
           >
             <GoDotFill className="text-gray-600" />
-            <span> All </span>
+            <span>All</span>
           </TabsTrigger>
           <TabsTrigger
             value="Pending"
-            className="px-3 py-2 flex items-center gap-1"
+            className="shrink-0 px-2 py-2 text-xs sm:px-3 sm:text-sm"
           >
             <GoDotFill className="text-blue-600" />
-            <span> Pending </span>
+            <span>Pending</span>
           </TabsTrigger>
           <TabsTrigger
             value="In Progress"
-            className="px-3 py-2 flex items-center gap-1"
+            className="shrink-0 px-2 py-2 text-xs sm:px-3 sm:text-sm"
           >
             <GoDotFill className="text-orange-600" />
-            <span> In Progress </span>
+            <span>In Progress</span>
           </TabsTrigger>
           <TabsTrigger
             value="Completed"
-            className="px-3 py-2 flex items-center gap-1"
+            className="shrink-0 px-2 py-2 text-xs sm:px-3 sm:text-sm"
           >
             <GoDotFill className="text-green-500" />
-            <span> Completed </span>
+            <span>Completed</span>
           </TabsTrigger>
         </TabsList>
 

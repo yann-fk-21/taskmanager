@@ -124,7 +124,7 @@ const SignupPage = () => {
 
         <form
           onSubmit={registerHandler}
-          className="flex flex-col gap-4 mt-4 w-2/5"
+          className="flex flex-col gap-4 mt-4 md:w-2/5"
         >
           <div>
             <label htmlFor="username" className="text-sm font-semibold">
