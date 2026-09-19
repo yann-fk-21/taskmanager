@@ -56,4 +56,5 @@ jobs:
         working-directory: frontend
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: railway up --project "${{ secrets.RAILWAY_PROJECT_ID }}" --service frontend
+          RAILWAY_ENVIRONMENT: production
+        run: railway up --project "${{ secrets.RAILWAY_PROJECT_ID }}" --environment "${{ env.RAILWAY_ENVIRONMENT }}" --service frontend
