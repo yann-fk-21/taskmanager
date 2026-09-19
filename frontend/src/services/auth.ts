@@ -1,6 +1,6 @@
 import type { User, UserCredentials } from '../types/types';
 
-const BACKEND_URL = import.meta.env.BACKEND_URL || 'http://localhost:8080';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8080';
 
 export const registerUser = async (user: User): Promise<Response> => {
   try {
